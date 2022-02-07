@@ -106,7 +106,9 @@ fn main() {
         }
     } else {
         cfg.flag("-fvisibility=hidden");
-        cfg.flag(&format!("-ffile-prefix-map={}=/libssh2-sys/out", dst.to_string_lossy()));
+        if cfg!(target_os = "linux") {
+            cfg.flag(&format!("-ffile-prefix-map={}=/libssh2-sys/out", dst.to_string_lossy()));
+        }
         cfg.define("HAVE_SNPRINTF", None);
         cfg.define("HAVE_UNISTD_H", None);
         cfg.define("HAVE_INTTYPES_H", None);
